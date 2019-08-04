@@ -1,207 +1,152 @@
 const searchBtn = document.querySelector(".search-btn");
+const searchBar = document.querySelector(".search-bar");
+const searchInput = document.querySelector(".search-input");
 const resultList = document.querySelector(".result-list");
 const watchedList = document.querySelector(".watched-list");
 const watchedCount = document.querySelector(".watched-count");
-const searchInput = document.querySelector(".search-input");
 
-const response = [
-  {
-    name: "Star Wars",
-    year: "2004",
-    imdb: "8.5",
-    category: "Horror / Sci-fi"
-  },
-  {
-    name: "Breaking Bad",
-    year: "2009",
-    imdb: "9.9",
-    category: "Torbacilik / Kimya"
-  }
-];
+const handleSearch = () => {
+  let input = searchInput.value;
 
-searchBtn.addEventListener("click", () => {
-  // TODO: API
-  addToResultList();
-
-  function addToResultList() {
-    response.forEach(movieInfo => {
-      let element = document.createElement("li");
-      element.classList.add("result");
-      element.addEventListener("click", () => addToWatchedList(movieInfo));
-
-      element.innerHTML += `<img  alt="" />
-                            <h3>${movieInfo.name} (${movieInfo.year})</h3>
-                            <div class="imdb">IMDb ${movieInfo.imdb}</div>
-                            <div class="category">${movieInfo.category}</div>`;
-
-      resultList.appendChild(element);
+  fetch(`http://www.omdbapi.com/?s=${input}&apikey=e8381870`)
+    .then(res => {
+      return res.json();
+    })
+    .then(res => {
+      let movies = res.Search.slice(0, 5);
+      movies.forEach(movie => {
+        fetch(`http://www.omdbapi.com/?i=${movie.imdbID}&apikey=e8381870`)
+          .then(res => {
+            return res.json();
+          })
+          .then(res => {
+            addMovieToResultList(res);
+          });
+      });
     });
-  }
-});
 
-const addToWatchedList = movieInfo => {
+  function addMovieToResultList(movie) {
+    let element = document.createElement("li");
+    element.classList.add("result");
+    element.addEventListener("click", () => addToWatchedList(movie));
+    // prettier-ignore
+    element.innerHTML += `<img src=${movie.Poster}/>
+                          <p class="title">${movie.Title}</p><span class="year"> (${movie.Year})</span>
+                          <p class="genre">${movie.Genre}</p>`;
+
+    resultList.appendChild(element);
+  }
+};
+
+const getWatchedFromStorge = () => {
+  for (let i = 0; i < localStorage.length; i++) {
+    let key = localStorage.key(i).split("iw-")[1];
+    if (key != undefined) {
+      fetch(`http://www.omdbapi.com/?i=${key}&apikey=e8381870`)
+        .then(res => {
+          return res.json();
+        })
+        .then(res => {
+          addToWatchedList(res);
+        });
+    }
+  }
+};
+
+const addToWatchedList = movie => {
   let element = document.createElement("li");
   element.classList.add("watched");
 
-  element.innerHTML += `<img/>
-                        <h3>${movieInfo.name}</h3>`;
+  element.innerHTML += `<img src=${movie.Poster}/>
+                        `;
 
   watchedList.appendChild(element);
 
-  // Clear result list
+  // prettier-ignore
+  localStorage.setItem(`iw-${movie.imdbID}`, JSON.stringify({rating:[],note:""}));
+
   resultList.innerHTML = "";
-
-  // Clear input value
   searchInput.value = "";
-
-  // Update watched count
   watchedCount.innerHTML = watchedList.childElementCount;
 };
 
-// const taskInput = document.querySelector(".add-task-area input");
-// const taskList = document.querySelector(".task-list");
-// const projectContainer = document.querySelector(".project-list");
-// const burgerBtn = document.querySelector(".burger");
-// const sideBar = document.querySelector(".side-bar");
+/* internet
+// Add event listeners
+searchBtn.addEventListener("click", handleSearch);*/
+searchBtn.addEventListener("click", () => {
+  if (window.innerWidth <= 768) searchBar.classList.add("active");
+});
 
-// let projectList = [];
-// let activeProject, lastActiveProject;
+searchInput.addEventListener("keyup", event => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    // handleSearch();
+  }
+});
 
-// class Project {
-//   constructor(name, taskArr) {
-//     this.name = name.toLowerCase();
-//     this.taskArr = taskArr;
-//     this._saveToLocalStorge();
-//   }
+document.addEventListener("click", event => {
+  if (event.path.some(el => el.tagName == "MAIN")) {
+    resultList.innerHTML = "";
+    if (searchBar.classList.contains("active"))
+      searchBar.classList.remove("active");
+  }
+});
 
-//   addTask(task = taskInput.value) {
-//     this._createTaskItem({ task: task }, length);
+// getWatchedFromStorge();
 
-//     // Clear input's value
-//     taskInput.value = "";
-//     this.taskArr.push({ task: task, checked: false });
-//     this._saveToLocalStorge();
-//   }
+let movieList = [
+  {
+    Title: "The Good, The Luck, The Ugly",
+    Year: 2018,
+    Genre: "Horror, sci-fi",
+    Poster: "'images/pos-1.jpg'"
+  },
+  {
+    Title: "Naber ya bilader",
+    Year: 2005,
+    Genre: "Action",
+    Poster: "'images/pos-2.jpg'"
+  },
+  {
+    Title: "Breaking Bad",
+    Year: 2009,
+    Genre: "Crime, horror",
+    Poster: "'images/pos-3.jpg'"
+  },
+  {
+    Title: "Hey Arnould!",
+    Year: 2019,
+    Genre: "Comedy, animation",
+    Poster: "'images/pos-4.jpg'"
+  },
+  {
+    Title: "Star Wars Nerden Geldik Buraya",
+    Year: 1453,
+    Genre: "Comedy, işin kılıçları",
+    Poster: "'images/pos-5.jpg'"
+  }
+];
 
-//   removeTask(taskIndex) {
-//     taskList.removeChild(taskList.children[taskIndex]);
-//     this.taskArr.splice(taskIndex, 1);
-//     this._saveToLocalStorge();
-//   }
+searchBtn.addEventListener("click", srcc);
 
-//   removeAllTask() {
-//     this.taskArr = [];
-//     this._saveToLocalStorge();
-//     taskList.innerHTML = "";
-//   }
+function srcc() {
+  movieList.forEach(movie => {
+    let element = document.createElement("li");
+    element.classList.add("result");
+    element.addEventListener("click", () => addToWatchedList(movie));
+    // prettier-ignore
+    element.innerHTML += `<img src=${movie.Poster}/>
+                          <p class="title">${movie.Title}</p>
+                          <span class="year"> (${movie.Year})</span>
+                          <p class="genre">${movie.Genre}</p>`;
 
-//   changeCheckboxValue(taskIndex) {
-//     this.taskArr[taskIndex].checked = !this.taskArr[taskIndex].checked;
-//     this._saveToLocalStorge();
-//   }
+    resultList.appendChild(element);
+  });
+}
 
-//   drawTaskItem() {
-//     taskList.innerHTML = "";
-
-//     this.taskArr.forEach((object, index) => {
-//       this._createTaskItem(object, index);
-//     });
-//   }
-
-//   /* ---PRIVATE FUNCTIONS--- */
-
-//   _createTaskItem(object, taskIndex) {
-//     let element = document.createElement("li");
-//     element.classList.add("task");
-//     element.innerHTML = `<input type="checkbox">
-//                          <label>${object.task}</label>
-//                          <button class="btn-del-task"><i class="fas fa-plus-circle"></i></button>`;
-
-//     let checkbox = element.children[0];
-//     checkbox.checked = object.checked;
-//     checkbox.addEventListener("click", () => {
-//       this.changeCheckboxValue(taskIndex);
-//     });
-
-//     element.children[2].addEventListener("click", () => {
-//       this.removeTask(taskIndex);
-//     });
-
-//     taskList.appendChild(element);
-//   }
-
-//   _saveToLocalStorge() {
-//     localStorage.setItem(`todo-app-${this.name}`, JSON.stringify(this.taskArr));
-//   }
-// }
-
-// const getProjectsFromStorge = () => {
-//   for (let i = 0; i < localStorage.length; i++) {
-//     let key = localStorage.key(i);
-//     if (key.includes("todo-app")) {
-//       let value = JSON.parse(localStorage.getItem(key));
-//       let project = new Project(key.split("todo-app-")[1], value);
-//       appendProjectToSidebar(project);
-//     }
-//   }
-//   if (!projectList.length) createNewProject();
-//   else changeActiveProject();
-// };
-
-// const appendProjectToSidebar = project => {
-//   const item = document.createElement("li");
-//   item.addEventListener("click", () => {
-//     changeActiveProject(project);
-//   });
-//   item.addEventListener("click", () => {
-//     sideBar.classList.toggle("open");
-//   });
-//   projectList.push(project)
-//   item.innerHTML += project.name;
-//   projectContainer.appendChild(item);
-// };
-
-// const createNewProject = () => {
-//   let projectName = prompt("Please write your project name.")
-//   if (projectName) {
-//     let project = new Project(projectName, [])
-//     appendProjectToSidebar(project)
-//     changeActiveProject(project)
-//   }
-// };
-
-// const changeActiveProject = (project = projectList[0]) => {
-//   let elementIndex = projectList.indexOf(activeProject);
-//   if (activeProject != undefined && elementIndex != -1)
-//     projectContainer.children[elementIndex].classList.remove("active");
-
-//   elementIndex = projectList.indexOf(project);
-//   projectContainer.children[elementIndex].classList.add("active");
-
-//   activeProject = project;
-//   document.querySelector(".project-title").innerHTML = activeProject.name;
-//   activeProject.drawTaskItem();
-// };
-
-// const removeProject = () => {
-//   let elementIndex = projectList.indexOf(activeProject);
-//   // Remove from storge
-//   localStorage.removeItem(`todo-app-${activeProject.name}`);
-//   // Delete element
-//   projectContainer.removeChild(projectContainer.children[elementIndex]);
-//   // Remove from projectList
-//   projectList.splice(elementIndex, 1);
-//   // ChangeActiveProject
-//   changeActiveProject();
-// };
-
-// burgerBtn.addEventListener("click", () => {
-//   sideBar.classList.toggle("open");
-// });
-
-// getProjectsFromStorge();
-
-// // const arr = [{'name':'work','tasks':[{'task':"havuza gir.",'checked':true},{'task':'Come to party.','checked':false}]},
-// //               {'name':'study','tasks':[{'task':"İşine bak.",'checked':false},{'task':"Uyuma kalk.",'checked':false},{'task':'Get out here..','checked':true}]}];
-
-// // localStorage.setItem('todo-app', JSON.stringify(arr));
+for (let i = 0; i < 5; i++) {
+  const movie = movieList[i];
+  let element = document.createElement("li");
+  element.classList.add("result");
+  addToWatchedList(movie);
+}
