@@ -1,0 +1,115 @@
+header {
+  height: 16vh;
+  min-height: 75px;
+  box-shadow: 0 0 15px rgba(black, 0.8);
+
+  .wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include media($max-width: 768px) {
+      position: relative;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      flex: 2;
+      @include media($max-width: 768px) {
+        content: none;
+      }
+    }
+  }
+
+  .logo {
+    font-weight: 100;
+    flex: 2;
+    span {
+      color: $secondary-color;
+    }
+  }
+
+  .src-bar {
+    flex: 4;
+    position: relative;
+    background: $white;
+    max-width: 768px;
+    transition: width 0.3s ease-in-out;
+    @include media($max-width: 768px) {
+      position: absolute;
+      right: 0;
+      width: 0;
+      max-width: none;
+      flex: none;
+    }
+
+    &.active {
+      width: 100%;
+      .src-bar__btn {
+        color: black;
+      }
+    }
+
+    &__input {
+      outline: none;
+      border: 0;
+      background: none;
+      width: 90%;
+      padding: 10px;
+      @include media($max-width: 768px) {
+        width: 100%;
+      }
+
+      &:focus-within::placeholder {
+        color: $white;
+      }
+    }
+
+    &__btn {
+      transform: translateY(-50%);
+      transition: color 0.3;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      right: 2%;
+
+      @include media($max-width: 768px) {
+        color: $white;
+      }
+    }
+
+    .result-list {
+      background: $white;
+      position: absolute;
+      left: 0;
+      width: 100%;
+
+      .result {
+        border: 1px solid lighten($secondary-color, 0.4);
+        margin: 10px 1%;
+        padding: 1%;
+        cursor: pointer;
+        overflow: hidden;
+        display: flex;
+
+        img {
+          margin: 0 3% 0 1%;
+          width: 6vw;
+          pointer-events: none;
+        }
+
+        .title {
+          font-weight: 600;
+          display: inline-block;
+          pointer-events: none;
+        }
+
+        .genre {
+          font-size: 0.8em;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}

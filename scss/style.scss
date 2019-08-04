@@ -1,0 +1,38 @@
+@import "Base/variables";
+@import "Base/mixins";
+@import "Base/resets";
+
+@import "header";
+@import "main";
+
+main {
+  position: relative;
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    .box {
+      margin: 10px;
+      height: 300px;
+      width: 175px;
+      background: $secondary-color;
+    }
+  }
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(71, 70, 70, 0.5);
+    z-index: -1;
+    opacity: 0;
+    transition: 0.2s ease-in;
+  }
+
+  .activ {
+    opacity: 1;
+    z-index: 2;
+  }
+}

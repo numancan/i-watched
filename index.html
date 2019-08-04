@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TO-DO App</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
@@ -20,15 +20,14 @@
       rel="stylesheet"
     />
   </head>
-
   <body>
     <!-- HEADER -->
     <header>
-      <div class="container holder">
-        <h1 class="logo-text">I WATCHED</h1>
-        <div class="search-bar">
-          <input type="text" class="search-input" placeholder="search" />
-          <a class="search-btn"><i class="fas fa-search"></i></a>
+      <div class="wrapper">
+        <h1 class="logo">I <span>WATCHED</span></h1>
+        <div class="src-bar">
+          <input type="text" class="src-bar__input" placeholder="search" />
+          <a class="src-bar__btn"><i class="fas fa-search"></i></a>
           <ul class="result-list"></ul>
         </div>
       </div>
@@ -36,9 +35,23 @@
 
     <!-- MAIN -->
     <main>
-      <div class="container">
+      <div class="wrapper">
         <h2>Watched (<span class="watched-count">0</span>)</h2>
-        <ul class="watched-list"></ul>
+        <ul class="watched-list">
+          <li class="watched">
+            <img src="images/pos-3.jpg" />
+            <div class="content">
+              <h3>Breaking Bad <span>(2013)</span></h3>
+              <h4>Rating</h4>
+              <div class="rating">
+                <span class="imdb">IMDb 8,6</span>
+                <span class="your-rating">Your 4,6</span>
+              </div>
+              <h4>Note</h4>
+              <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
+          </li>
+        </ul>
       </div>
     </main>
 
@@ -46,6 +59,6 @@
     <footer></footer>
 
     <!-- SCRIPTS -->
-    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
   </body>
 </html>

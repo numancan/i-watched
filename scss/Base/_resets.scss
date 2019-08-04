@@ -1,0 +1,34 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Open sans", sans-serif;
+}
+
+body {
+  background: $primary-color;
+}
+
+.wrapper {
+  width: 95%;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+.title,
+::placeholder {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+}
+
+h1,
+h2,
+h3 {
+  color: $white;
+}

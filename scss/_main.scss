@@ -1,0 +1,54 @@
+main {
+  padding: 100px 0;
+
+  h2 {
+    margin-bottom: 16px;
+    @include underline;
+
+    .watched-count {
+      color: $secondary-color;
+      font-size: 1.1em;
+    }
+  }
+
+  .watched-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax());
+    grid-gap: 1.5rem;
+    @include border;
+
+    .watched {
+      background: $primary-color-light;
+      display: flex;
+
+      img {
+        width: 18vw;
+      }
+
+      .content {
+        color: $white;
+
+        h4 {
+          @include underline;
+        }
+
+        .rating {
+          overflow: hidden;
+
+          .imdb {
+            background: #f39c12;
+          }
+
+          .your-rating {
+            background: #16a085;
+          }
+        }
+
+        textarea {
+          resize: none;
+          height: auto;
+        }
+      }
+    }
+  }
+}

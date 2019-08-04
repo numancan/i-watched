@@ -1,9 +1,19 @@
-const searchBtn = document.querySelector(".search-btn");
-const searchBar = document.querySelector(".search-bar");
-const searchInput = document.querySelector(".search-input");
+const searchBtn = document.querySelector(".src-bar__btn");
+const searchBar = document.querySelector(".src-bar");
+const searchInput = document.querySelector(".src-bar__input");
 const resultList = document.querySelector(".result-list");
 const watchedList = document.querySelector(".watched-list");
 const watchedCount = document.querySelector(".watched-count");
+
+async function getMovie(imdbID) {
+  let response = await fetch(
+    `http://www.omdbapi.com/?i=${imdbID}&apikey=e8381870`
+  );
+  let data = await response.json();
+
+  data.Poster = data.Poster == "N/A" ? "images/no-image.png" : data.Poster;
+  return data;
+}
 
 const handleSearch = () => {
   let input = searchInput.value;
@@ -16,16 +26,7 @@ const handleSearch = () => {
     .then(res => {
       let movies = res.Search || [];
       movies.forEach(movie => {
-        fetch(`http://www.omdbapi.com/?i=${movie.imdbID}&apikey=e8381870`)
-          .then(res => {
-            return res.json();
-          })
-          .then(res => {
-            res.Poster =
-              res.Poster == "N/A" ? "images/no-image.png" : res.Poster;
-            console.log(res.Poster);
-            addMovieToResultList(res);
-          });
+        getMovie(movie.imdbID).then(movie => addMovieToResultList(movie));
       });
     });
 
@@ -44,25 +45,21 @@ const handleSearch = () => {
   }
 };
 
-async function getWatchedFromStorge() {
+const getWatchedFromStorge = () => {
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i).split("iw-")[1];
 
     if (key != undefined) {
-      let response = await fetch(
-        `http://www.omdbapi.com/?i=${key}&apikey=e8381870`
-      );
-      let data = await response.json();
-      addToWatchedList(data);
+      getMovie(key).then(movie => addToWatchedList(movie));
     }
   }
-}
+};
 
 const addToWatchedList = movie => {
   let element = document.createElement("li");
   element.classList.add("watched");
 
-  element.innerHTML += `<img src=${movie.Poster}/>`;
+  element.innerHTML += `<img src=${movie.Poster}>`;
 
   watchedList.appendChild(element);
 
@@ -88,6 +85,8 @@ searchInput.addEventListener("keyup", event => {
 });
 
 document.addEventListener("click", event => {
+  console.log(event.path);
+
   if (event.path.some(el => el.tagName == "MAIN")) {
     resultList.innerHTML = "";
     if (searchBar.classList.contains("active"))
