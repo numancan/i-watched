@@ -90,14 +90,18 @@ header .holder::after {
   padding: 1%;
   cursor: pointer;
   overflow: hidden;
+
+  display: flex;
 }
 
 .result img {
-  float: left;
   margin: 0 3% 0 1%;
   width: 6vw;
   background: #d4cfcf;
   pointer-events: none;
+}
+
+.result__holder {
 }
 
 .result .title {
@@ -163,9 +167,15 @@ h2 {
   }
 
   .search-btn {
+    color: white;
+    transition: color 0.3;
   }
 
   .search-bar.active {
     width: 100%;
+  }
+
+  .search-bar.active .search-btn {
+    color: black;
   }
 }

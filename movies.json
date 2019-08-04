@@ -1,0 +1,32 @@
+[
+  {
+    "Title": "The Good, The Luck, The Ugly",
+    "Year": 2018,
+    "Genre": "Horror, sci-fi",
+    "Poster": "'images/pos-1.jpg'"
+  },
+  {
+    "Title": "Naber ya bilader",
+    "Year": 2005,
+    "Genre": "Action",
+    "Poster": "'images/pos-2.jpg'"
+  },
+  {
+    "Title": "Breaking Bad",
+    "Year": 2009,
+    "Genre": "Crime, horror",
+    "Poster": "'images/pos-3.jpg'"
+  },
+  {
+    "Title": "Hey Arnould!",
+    "Year": 2019,
+    "Genre": "Comedy, animation",
+    "Poster": "'images/pos-4.jpg'"
+  },
+  {
+    "Title": "Star Wars Nerden Geldik Buraya",
+    "Year": 1453,
+    "Genre": "Comedy, işin kılıçları",
+    "Poster": "'images/pos-5.jpg'"
+  }
+]
