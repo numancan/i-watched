@@ -14,9 +14,9 @@ main {
 
   .watched-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 0.6fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.3fr));
     grid-gap: 1.5rem;
-    justify-content: center;
+    justify-content: space-between;
 
     .watched {
       position: relative;

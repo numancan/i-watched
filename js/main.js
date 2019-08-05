@@ -53,40 +53,36 @@ async function getWatchedFromStorge() {
     if (key != undefined) {
       let movie = await getMovie(key);
       addToWatchedList(movie);
-      console.log("addWatchedList");
     }
   }
-  console.log("bitti");
 }
 
-const addToWatchedList = movie => {
-  let element = document.createElement("li");
-  element.classList.add("watched");
+const storeWatchedInStorage = (imdbID, movieInfo) => {
+  localStorage.setItem(`iw-${imdbID}`, JSON.stringify(movieInfo));
+};
 
-  element.innerHTML += `<img src="${movie.Poster}" alt="poster" />
-                        <div class="content">
-                          <h3>${movie.Title} <span>(${movie.Year})</span></h3>
-                          <h4>Rating</h4>
-                          <div class="rating">
-                            <span class="imdb">IMDb ${movie.imdbRating}</span>
-                            <span class="your-rating">Your 0
-                            <i class="far fa-edit"></i></span>
-                          </div>
-                          <h4>Note</h4>
-                          <textarea name="note" placeholder=".."></textarea>
-                        </div>`;
+const addToWatchedList = movie => {
+  let bisey = JSON.parse(localStorage.getItem(`iw-${movie.imdbID}`)) || {
+    rating: "",
+    note: ""
+  };
+
+  storeWatchedInStorage(movie.imdbID, bisey);
+
+  let element = createMovieItem(movie, bisey);
 
   watchedList.appendChild(element);
 
-  // prettier-ignore
-  localStorage.setItem(`iw-${movie.imdbID}`, JSON.stringify({rating:[],note:""}));
+  element.lastElementChild.addEventListener("change", function() {
+    let note = this.lastElementChild.value;
+    storeWatchedInStorage(movie.imdbID, { rating: [], note });
+  });
 
   resultList.innerHTML = "";
   searchInput.value = "";
   watchedCount.innerHTML = watchedList.childElementCount;
 };
 
-// Add event listeners
 const addEventListerners = () => {
   searchBtn.addEventListener("click", handleSearch);
   searchBtn.addEventListener("click", () => {
@@ -123,3 +119,25 @@ const addEventListerners = () => {
 
 // ??????????????????
 getWatchedFromStorge().then(bos => addEventListerners());
+
+function createMovieItem(movie, bisey) {
+  let element = document.createElement("li");
+  let rating = bisey.rating || "Rate this";
+  element.classList.add("watched");
+  element.innerHTML += `<img src="${movie.Poster}" alt="poster" />
+                        <div class="content">
+                          <h3>${movie.Title} <span>(${movie.Year})</span></h3>
+                          <h4>Rating</h4>
+                          <div class="rating">
+                            <span class="imdb">IMDb ${movie.imdbRating}</span>
+                          </div>
+                          <h4>Note</h4>
+                          <textarea name="note" spellcheck="false" placeholder="..">${
+                            bisey.note
+                          }</textarea>
+                        </div>`;
+
+  console.log(movie.imdbRating);
+
+  return element;
+}

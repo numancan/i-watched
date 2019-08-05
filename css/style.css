@@ -262,12 +262,12 @@ main h2 .watched-count {
 main .watched-list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(200px, 0.6fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(200px, 0.6fr));
+  -ms-grid-columns: (minmax(200px, 0.3fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(200px, 0.3fr));
   grid-gap: 1.5rem;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 main .watched-list .watched {
