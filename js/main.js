@@ -4,6 +4,7 @@ const searchInput = document.querySelector(".src-bar__input");
 const resultList = document.querySelector(".result-list");
 const watchedList = document.querySelector(".watched-list");
 const watchedCount = document.querySelector(".watched-count");
+const overlay = document.querySelector(".overlay");
 
 async function getMovie(imdbID) {
   let response = await fetch(
@@ -45,21 +46,35 @@ const handleSearch = () => {
   }
 };
 
-const getWatchedFromStorge = () => {
+async function getWatchedFromStorge() {
   for (let i = 0; i < localStorage.length; i++) {
     let key = localStorage.key(i).split("iw-")[1];
 
     if (key != undefined) {
-      getMovie(key).then(movie => addToWatchedList(movie));
+      let movie = await getMovie(key);
+      addToWatchedList(movie);
+      console.log("addWatchedList");
     }
   }
-};
+  console.log("bitti");
+}
 
 const addToWatchedList = movie => {
   let element = document.createElement("li");
   element.classList.add("watched");
 
-  element.innerHTML += `<img src=${movie.Poster}>`;
+  element.innerHTML += `<img src="${movie.Poster}" alt="poster" />
+                        <div class="content">
+                          <h3>${movie.Title} <span>(${movie.Year})</span></h3>
+                          <h4>Rating</h4>
+                          <div class="rating">
+                            <span class="imdb">IMDb ${movie.imdbRating}</span>
+                            <span class="your-rating">Your 0
+                            <i class="far fa-edit"></i></span>
+                          </div>
+                          <h4>Note</h4>
+                          <textarea name="note" placeholder=".."></textarea>
+                        </div>`;
 
   watchedList.appendChild(element);
 
@@ -72,26 +87,39 @@ const addToWatchedList = movie => {
 };
 
 // Add event listeners
-searchBtn.addEventListener("click", handleSearch);
-searchBtn.addEventListener("click", () => {
-  if (window.innerWidth <= 768) searchBar.classList.add("active");
-});
+const addEventListerners = () => {
+  searchBtn.addEventListener("click", handleSearch);
+  searchBtn.addEventListener("click", () => {
+    if (window.innerWidth <= 768) searchBar.classList.add("active");
+  });
 
-searchInput.addEventListener("keyup", event => {
-  if (event.keyCode === 13) {
-    event.preventDefault();
-    handleSearch();
-  }
-});
+  searchInput.addEventListener("keyup", event => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      handleSearch();
+    }
+  });
 
-document.addEventListener("click", event => {
-  console.log(event.path);
+  document.addEventListener("click", event => {
+    if (event.path.some(el => el.tagName == "MAIN")) {
+      resultList.innerHTML = "";
+      if (searchBar.classList.contains("active"))
+        searchBar.classList.remove("active");
+    }
+  });
 
-  if (event.path.some(el => el.tagName == "MAIN")) {
-    resultList.innerHTML = "";
-    if (searchBar.classList.contains("active"))
-      searchBar.classList.remove("active");
-  }
-});
+  document.querySelectorAll(".watched").forEach(child => {
+    child.addEventListener("mouseenter", event => {
+      event.target.style.zIndex = 5;
+      overlay.classList.add("active");
+    });
 
-getWatchedFromStorge();
+    child.addEventListener("mouseleave", event => {
+      event.target.style.zIndex = 1;
+      overlay.classList.remove("active");
+    });
+  });
+};
+
+// ??????????????????
+getWatchedFromStorge().then(bos => addEventListerners());

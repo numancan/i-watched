@@ -22,43 +22,55 @@ ul {
 h1,
 h2,
 h3,
+h4,
 .title,
 ::-webkit-input-placeholder {
   font-family: "Poppins", sans-serif;
-  font-weight: 100;
 }
 
 h1,
 h2,
 h3,
+h4,
 .title,
 :-ms-input-placeholder {
   font-family: "Poppins", sans-serif;
-  font-weight: 100;
 }
 
 h1,
 h2,
 h3,
+h4,
 .title,
 ::-ms-input-placeholder {
   font-family: "Poppins", sans-serif;
-  font-weight: 100;
 }
 
 h1,
 h2,
 h3,
+h4,
 .title,
 ::placeholder {
   font-family: "Poppins", sans-serif;
-  font-weight: 100;
+}
+
+h1,
+h2,
+h3,
+h4,
+span {
+  pointer-events: none;
 }
 
 h1,
 h2,
 h3 {
   color: #ecf0f1;
+}
+
+h4 {
+  font-size: 0.9em;
 }
 
 header {
@@ -125,13 +137,14 @@ header .src-bar {
 
 @media screen and (max-width: 768px) {
   header .src-bar {
-    position: absolute;
-    right: 0;
     width: 0;
     max-width: none;
     -webkit-box-flex: 0;
         -ms-flex: none;
             flex: none;
+    position: absolute;
+    top: none;
+    right: 0;
   }
 }
 
@@ -193,8 +206,8 @@ header .src-bar__btn {
 header .src-bar .result-list {
   background: #ecf0f1;
   position: absolute;
-  left: 0;
   width: 100%;
+  z-index: 3;
 }
 
 header .src-bar .result-list .result {
@@ -227,6 +240,7 @@ header .src-bar .result-list .result .genre {
 
 main {
   padding: 100px 0;
+  position: relative;
 }
 
 main h2 {
@@ -248,28 +262,50 @@ main h2 .watched-count {
 main .watched-list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax())[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax());
+  -ms-grid-columns: (minmax(200px, 0.6fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(200px, 0.6fr));
   grid-gap: 1.5rem;
-  border: 1px solid salmon;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 main .watched-list .watched {
-  background: #282856;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  position: relative;
 }
 
 main .watched-list .watched img {
-  width: 18vw;
+  float: left;
+  width: 100%;
+  height: 100%;
+}
+
+main .watched-list .watched img:hover + .content {
+  z-index: 2;
 }
 
 main .watched-list .watched .content {
+  background: rgba(40, 40, 86, 0.8);
   color: #ecf0f1;
+  padding: 5px;
+  position: absolute;
+  z-index: -1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
-main .watched-list .watched .content h4::after {
+main .watched-list .watched .content:hover {
+  z-index: 2;
+}
+
+main .watched-list .watched .content h3 + h4::after {
   content: "";
   display: block;
   border-bottom: 1px solid #e67e22;
@@ -278,6 +314,21 @@ main .watched-list .watched .content h4::after {
 
 main .watched-list .watched .content .rating {
   overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 5px 0;
+  position: relative;
+}
+
+main .watched-list .watched .content .rating span {
+  height: 30px;
+  width: 35%;
+  text-align: center;
+  line-height: 30px;
 }
 
 main .watched-list .watched .content .rating .imdb {
@@ -288,45 +339,41 @@ main .watched-list .watched .content .rating .your-rating {
   background: #16a085;
 }
 
-main .watched-list .watched .content textarea {
-  resize: none;
-  height: auto;
-}
-
-main {
-  position: relative;
-}
-
-main .wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-}
-
-main .wrapper .box {
-  margin: 10px;
-  height: 300px;
-  width: 175px;
-  background: #e67e22;
-}
-
-main .overlay {
-  width: 100%;
-  height: 100%;
+main .watched-list .watched .content .rating .your-rating i {
+  font-size: 12px;
+  color: #e67e22;
   position: absolute;
   top: 0;
   right: 0;
-  background: rgba(71, 70, 70, 0.5);
-  z-index: -1;
-  opacity: 0;
-  -webkit-transition: 0.2s ease-in;
-  transition: 0.2s ease-in;
 }
 
-main .activ {
+main .watched-list .watched .content textarea[name="note"] {
+  resize: none;
+  background: none;
+  border: 1px solid #e67e22;
+  -webkit-box-flex: 2;
+      -ms-flex: 2;
+          flex: 2;
+  color: #ecf0f1;
+}
+
+main .overlay {
+  content: "";
+  display: block;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+  opacity: 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+main .overlay.active {
   opacity: 1;
-  z-index: 2;
+  z-index: 4;
 }
 /*# sourceMappingURL=style.css.map */

@@ -36,12 +36,12 @@ header {
     background: $white;
     max-width: 768px;
     transition: width 0.3s ease-in-out;
+
     @include media($max-width: 768px) {
-      position: absolute;
-      right: 0;
       width: 0;
       max-width: none;
       flex: none;
+      @include position-abs($top: none, $right: 0);
     }
 
     &.active {
@@ -57,6 +57,7 @@ header {
       background: none;
       width: 90%;
       padding: 10px;
+
       @include media($max-width: 768px) {
         width: 100%;
       }
@@ -70,10 +71,7 @@ header {
       transform: translateY(-50%);
       transition: color 0.3;
       cursor: pointer;
-      position: absolute;
-      top: 50%;
-      right: 2%;
-
+      @include position-abs($top: 50%, $right: 2%);
       @include media($max-width: 768px) {
         color: $white;
       }
@@ -82,8 +80,8 @@ header {
     .result-list {
       background: $white;
       position: absolute;
-      left: 0;
       width: 100%;
+      z-index: 3;
 
       .result {
         border: 1px solid lighten($secondary-color, 0.4);

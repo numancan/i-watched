@@ -1,5 +1,6 @@
 main {
   padding: 100px 0;
+  position: relative;
 
   h2 {
     margin-bottom: 16px;
@@ -13,27 +14,53 @@ main {
 
   .watched-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax());
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0.6fr));
     grid-gap: 1.5rem;
-    @include border;
+    justify-content: center;
 
     .watched {
-      background: $primary-color-light;
-      display: flex;
+      position: relative;
 
       img {
-        width: 18vw;
+        float: left;
+        @include size($width: 100%);
+
+        &:hover + .content {
+          z-index: 2;
+        }
       }
 
       .content {
+        background: rgba($primary-color-light, 0.8);
         color: $white;
+        padding: 5px;
+        position: absolute;
+        z-index: -1;
+        display: flex;
+        flex-direction: column;
+        @include size($width: 100%);
 
-        h4 {
+        &:hover {
+          z-index: 2;
+        }
+
+        h3 + h4 {
           @include underline;
         }
 
         .rating {
           overflow: hidden;
+          display: flex;
+          justify-content: space-between;
+          padding: 5px 0;
+          position: relative;
+
+          span {
+            height: 30px;
+            width: 35%;
+            text-align: center;
+            line-height: 30px;
+          }
 
           .imdb {
             background: #f39c12;
@@ -41,14 +68,40 @@ main {
 
           .your-rating {
             background: #16a085;
+
+            i {
+              font-size: 12px;
+              color: $secondary-color;
+              @include position-abs;
+            }
           }
         }
 
-        textarea {
+        textarea[name="note"] {
           resize: none;
-          height: auto;
+          background: none;
+          border: 1px solid $secondary-color;
+          flex: 2;
+          color: $white;
         }
       }
+    }
+  }
+
+  .overlay {
+    content: "";
+    display: block;
+    background: rgba(black, 0.6);
+    z-index: -1;
+    opacity: 0;
+    transition: all 0.2s;
+
+    @include position-abs;
+    @include size(100%);
+
+    &.active {
+      opacity: 1;
+      z-index: 4;
     }
   }
 }
