@@ -81,7 +81,7 @@ header {
       background: $white;
       position: absolute;
       width: 100%;
-      z-index: 3;
+      z-index: 6;
 
       .result {
         border: 1px solid lighten($secondary-color, 0.4);

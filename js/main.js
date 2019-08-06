@@ -6,6 +6,19 @@ const watchedList = document.querySelector(".watched-list");
 const watchedCount = document.querySelector(".watched-count");
 const overlay = document.querySelector(".overlay");
 
+/*
+--storge
+  --setMoive
+  --getMovie
+--api
+  --getSearchResult
+  --getMovieByID
+--watchedlist
+  --addWatchedList
+--searchBar
+  --addResultList
+*/
+
 async function getMovie(imdbID) {
   let response = await fetch(
     `http://www.omdbapi.com/?i=${imdbID}&apikey=e8381870`
@@ -68,8 +81,18 @@ const addToWatchedList = movie => {
   };
 
   storeWatchedInStorage(movie.imdbID, bisey);
-
-  let element = createMovieItem(movie, bisey);
+  let element = document.createElement("li");
+  let rating = bisey.rating || "Rate this";
+  element.classList.add("watched");
+  // prettify-ignore
+  element.innerHTML += `<img src="${movie.Poster}" alt="poster" />
+                        <div class="content">
+                          <h3>${movie.Title} <span>(${movie.Year})</span></h3>
+                          <div class="note">
+                            <h4>Note</h4>
+                            <textarea name="note" spellcheck="false" placeholder=".."></textarea>
+                        </div>
+                      </div>`;
 
   watchedList.appendChild(element);
 
@@ -104,6 +127,7 @@ const addEventListerners = () => {
     }
   });
 
+  // Oluştururken ekle
   document.querySelectorAll(".watched").forEach(child => {
     child.addEventListener("mouseenter", event => {
       event.target.style.zIndex = 5;
@@ -124,20 +148,15 @@ function createMovieItem(movie, bisey) {
   let element = document.createElement("li");
   let rating = bisey.rating || "Rate this";
   element.classList.add("watched");
+  // prettify-ignore
   element.innerHTML += `<img src="${movie.Poster}" alt="poster" />
                         <div class="content">
                           <h3>${movie.Title} <span>(${movie.Year})</span></h3>
-                          <h4>Rating</h4>
-                          <div class="rating">
-                            <span class="imdb">IMDb ${movie.imdbRating}</span>
-                          </div>
-                          <h4>Note</h4>
-                          <textarea name="note" spellcheck="false" placeholder="..">${
-                            bisey.note
-                          }</textarea>
-                        </div>`;
-
-  console.log(movie.imdbRating);
+                          <div class="note">
+                            <h4>Note</h4>
+                            <textarea name="note" spellcheck="false" placeholder=".."></textarea>
+                        </div>
+                      </div>`;
 
   return element;
 }
