@@ -1,5 +1,5 @@
-@mixin border {
-  border: 1px solid salmon;
+@mixin border($color: salmon) {
+  border: 1px solid $color;
 }
 
 @mixin media($max-width) {
@@ -26,4 +26,14 @@
   position: absolute;
   top: $top;
   right: $right;
+}
+
+/// @param {} $jc row - justify-content
+/// @param {Direction} $dir flex-start - flex-direction
+/// @param {}  $align stretch - align-items
+@mixin flex($dir: row, $jc: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jc;
+  align-items: $align;
 }

@@ -1,7 +1,9 @@
 import { getDataFromAPI } from "./api.js";
 import { appendToWatchedList } from "./watchedList.js";
 
+const searchBar = document.querySelector(".src-bar");
 const searchInput = document.querySelector(".src-bar__input");
+const searchBtn = document.querySelector(".src-bar__btn");
 const resultList = document.querySelector(".result-list");
 
 // Clear search bar's input and result list
@@ -31,7 +33,7 @@ const appendMovieToResutList = movie => {
 };
 
 const handleSearch = () => {
-  let input = searchInput.value || "breaking";
+  let input = searchInput.value || "";
 
   getDataFromAPI(`s=${input}`).then(data => {
     let searchResult = data.Search || [];
@@ -52,4 +54,26 @@ const handleSearch = () => {
   });
 };
 
-export { handleSearch };
+const initialize = () => {
+  searchBtn.addEventListener("click", handleSearch);
+  searchBtn.addEventListener("click", () => {
+    if (window.innerWidth <= 768) searchBar.classList.add("active");
+  });
+
+  searchInput.addEventListener("keyup", event => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      handleSearch();
+    }
+  });
+
+  document.addEventListener("click", event => {
+    if (event.path.some(el => el.tagName == "MAIN")) {
+      clear();
+      if (searchBar.classList.contains("active"))
+        searchBar.classList.remove("active");
+    }
+  });
+};
+
+export default { initialize };

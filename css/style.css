@@ -22,55 +22,11 @@ ul {
 h1,
 h2,
 h3,
-h4,
-.title,
-::-webkit-input-placeholder {
-  font-family: "Poppins", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-.title,
-:-ms-input-placeholder {
-  font-family: "Poppins", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-.title,
-::-ms-input-placeholder {
-  font-family: "Poppins", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-.title,
-::placeholder {
-  font-family: "Poppins", sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-span {
-  pointer-events: none;
-}
-
-h1,
-h2,
-h3 {
-  color: #ecf0f1;
-}
-
 h4 {
-  font-size: 0.9em;
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  pointer-events: none;
+  color: #ecf0f1;
 }
 
 header {
@@ -85,12 +41,16 @@ header .wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -219,6 +179,16 @@ header .src-bar .result-list .result {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
 }
 
 header .src-bar .result-list .result img {
@@ -241,6 +211,7 @@ header .src-bar .result-list .result .genre {
 main {
   padding: 100px 0;
   position: relative;
+  height: 100vh;
 }
 
 main h2 {
@@ -262,12 +233,18 @@ main h2 .watched-count {
 main .watched-list {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (minmax(200px, 0.6fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(200px, 0.6fr));
-  grid-gap: 1.5rem;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-grid-columns: (minmax(220px, 0.6fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(220px, 0.6fr));
+  grid-auto-rows: minmax(1fr, 500px);
+  grid-gap: 16px;
+}
+
+@media screen and (max-width: 1024px) {
+  main .watched-list {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
 }
 
 main .watched-list .watched {
@@ -280,11 +257,17 @@ main .watched-list .watched img {
   height: 100%;
 }
 
-main .watched-list .watched img:hover + .content {
-  z-index: 2;
+main .watched-list .watched img:hover + .holder {
+  z-index: 5;
 }
 
-main .watched-list .watched .content {
+main .watched-list .watched .holder {
+  background: rgba(40, 40, 86, 0.8);
+  position: absolute;
+  z-index: -1;
+  padding: 7px;
+  width: 100%;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -295,40 +278,32 @@ main .watched-list .watched .content {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  position: absolute;
-  background: rgba(40, 40, 86, 0.8);
-  z-index: -1;
-  padding: 7px;
-  width: 100%;
-  height: 100%;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
 }
 
-main .watched-list .watched .content:hover {
-  z-index: 2;
+main .watched-list .watched .holder:hover {
+  z-index: 5;
 }
 
-main .watched-list .watched .content h3 {
-  margin-bottom: 10px;
-  font-size: 1.1em;
-}
-
-main .watched-list .watched .content h3::after {
+main .watched-list .watched .holder h3::after {
   content: "";
   display: block;
   border-bottom: 1px solid #e67e22;
   padding-top: 4px;
 }
 
-main .watched-list .watched .content .note {
+main .watched-list .watched .holder .note {
   width: 100%;
   height: 60%;
 }
 
-main .watched-list .watched .content .note h4 {
-  color: #ecf0f1;
+main .watched-list .watched .holder .note h4 {
+  font-size: 0.9em;
 }
 
-main .watched-list .watched .content .note textarea[name="note"] {
+main .watched-list .watched .holder .note textarea[name="note"] {
   resize: none;
   background: none;
   border: 1px solid #e67e22;

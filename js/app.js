@@ -1,4 +1,5 @@
-import { Storage } from "./storage.js";
-import { handleSearch } from "./search.js";
+import searchBar from "./searchBar.js";
+import watchedList from "./watchedList.js";
 
-handleSearch();
+searchBar.initialize();
+watchedList.initialize();
