@@ -32,8 +32,8 @@ h4 {
 header {
   height: 16vh;
   min-height: 75px;
-  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-          box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 header .wrapper {
@@ -210,8 +210,6 @@ header .src-bar .result-list .result .genre {
 
 main {
   padding: 100px 0;
-  position: relative;
-  height: 100vh;
 }
 
 main h2 {
@@ -236,6 +234,7 @@ main .watched-list {
   -ms-grid-columns: (minmax(220px, 0.6fr))[auto-fill];
       grid-template-columns: repeat(auto-fill, minmax(220px, 0.6fr));
   grid-auto-rows: minmax(1fr, 500px);
+  grid-auto-flow: row dense;
   grid-gap: 16px;
 }
 
@@ -266,6 +265,9 @@ main .watched-list .watched .holder {
   position: absolute;
   z-index: -1;
   padding: 7px;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -284,6 +286,7 @@ main .watched-list .watched .holder {
 }
 
 main .watched-list .watched .holder:hover {
+  opacity: 1;
   z-index: 5;
 }
 
@@ -312,25 +315,5 @@ main .watched-list .watched .holder .note textarea[name="note"] {
   padding: 5px;
   width: 100%;
   height: 80%;
-}
-
-main .overlay {
-  content: "";
-  display: block;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: -1;
-  opacity: 0;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-}
-
-main .overlay.active {
-  opacity: 1;
-  z-index: 4;
 }
 /*# sourceMappingURL=style.css.map */

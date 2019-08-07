@@ -33,7 +33,8 @@ const appendMovieToResutList = movie => {
 };
 
 const handleSearch = () => {
-  let input = searchInput.value || "";
+  let input = searchInput.value;
+  if (!input) return;
 
   getDataFromAPI(`s=${input}`).then(data => {
     let searchResult = data.Search || [];
@@ -55,9 +56,9 @@ const handleSearch = () => {
 };
 
 const initialize = () => {
-  searchBtn.addEventListener("click", handleSearch);
   searchBtn.addEventListener("click", () => {
     if (window.innerWidth <= 768) searchBar.classList.add("active");
+    handleSearch();
   });
 
   searchInput.addEventListener("keyup", event => {

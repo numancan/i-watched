@@ -1,4 +1,4 @@
-export const getDataFromAPI = key => {
+const getDataFromAPI = key => {
   let url = `http://www.omdbapi.com/?${key}&r=json&apikey=e8381870`;
   return fetch(url)
     .then(res => {
@@ -8,3 +8,5 @@ export const getDataFromAPI = key => {
       return data;
     });
 };
+
+export { getDataFromAPI };

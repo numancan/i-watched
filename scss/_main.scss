@@ -1,7 +1,5 @@
 main {
   padding: 100px 0;
-  position: relative;
-  height: 100vh;
 
   h2 {
     margin-bottom: 16px;
@@ -17,6 +15,7 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 0.6fr));
     grid-auto-rows: minmax(1fr, 500px);
+    grid-auto-flow: row dense;
     grid-gap: 16px;
     @include media($max-width: 1024px) {
       justify-content: center;
@@ -38,10 +37,13 @@ main {
         position: absolute;
         z-index: -1;
         padding: 7px;
+        opacity: 0;
+        transition: opacity 0.3s;
         @include size($width: 100%);
         @include flex($dir: column, $jc: space-between);
 
         &:hover {
+          opacity: 1;
           z-index: 5;
         }
 
@@ -68,23 +70,6 @@ main {
           }
         }
       }
-    }
-  }
-
-  .overlay {
-    content: "";
-    display: block;
-    background: rgba(black, 0.6);
-    z-index: -1;
-    opacity: 0;
-    transition: all 0.2s;
-
-    @include position-abs;
-    @include size(100%);
-
-    &.active {
-      opacity: 1;
-      z-index: 4;
     }
   }
 }

@@ -4,3 +4,4 @@
 
 - Kaydedilmiş içerikleri silebilme.
 - Overlay aktif olduğunda arka plandakilerin blurlanması.
+- Filtreleme

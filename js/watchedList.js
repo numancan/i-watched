@@ -1,6 +1,5 @@
 import { Storage } from "./storage.js";
 
-const overlay = document.querySelector(".overlay");
 const watchedList = document.querySelector(".watched-list");
 const watchedCount = document.querySelector(".watched-count");
 const storge = new Storage();
@@ -19,14 +18,6 @@ const createElement = watched => {
                         </div>
                       </div>`;
 
-  element.addEventListener("mouseenter", event => {
-    overlay.classList.add("active");
-  });
-
-  element.addEventListener("mouseleave", event => {
-    overlay.classList.remove("active");
-  });
-
   return element;
 };
 
@@ -37,7 +28,7 @@ const updateWatchedCount = () => {
 const appendToWatchedList = watched => {
   if (storge.get(watched.id) == null) storge.set(watched.id, watched);
   let element = createElement(watched);
-  watchedList.appendChild(element);
+  watchedList.prepend(element);
 
   element.lastElementChild.addEventListener("change", function() {
     watched.note = this.getElementsByTagName("textarea").note.value;
