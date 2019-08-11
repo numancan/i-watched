@@ -1,12 +1,12 @@
-import { Storage } from "./storage.js";
+import { Storage } from './storage.js';
 
-const watchedList = document.querySelector(".watched-list");
-const watchedCount = document.querySelector(".watched-count");
+const watchedList = document.querySelector('.watched-list');
+const watchedCount = document.querySelector('.watched-count');
 const storge = new Storage();
 
 const createElement = watched => {
-  let element = document.createElement("li");
-  element.classList.add("watched");
+  let element = document.createElement('li');
+  element.classList.add('watched');
 
   // prettier-ignore
   element.innerHTML += `<img src="${watched.poster}" alt="poster" />
@@ -26,12 +26,12 @@ const updateWatchedCount = () => {
 };
 
 const appendToWatchedList = watched => {
-  if (storge.get(watched.id) == null) storge.set(watched.id, watched);
+  storge.get(watched.id) || storge.set(watched.id, watched);
   let element = createElement(watched);
   watchedList.prepend(element);
 
-  element.lastElementChild.addEventListener("change", function() {
-    watched.note = this.getElementsByTagName("textarea").note.value;
+  element.lastElementChild.addEventListener('input', function() {
+    watched.note = this.getElementsByTagName('textarea').note.value;
     storge.set(watched.id, watched);
   });
 

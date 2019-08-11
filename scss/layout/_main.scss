@@ -33,7 +33,7 @@ main {
       }
 
       .holder {
-        background: rgba($primary-color-light, 0.8);
+        background: rgba($primary-color, 0.8);
         position: absolute;
         z-index: -1;
         padding: 7px;
@@ -59,7 +59,7 @@ main {
             font-size: 0.9em;
           }
 
-          textarea[name="note"] {
+          textarea[name='note'] {
             resize: none;
             background: none;
             border: 1px solid $secondary-color;

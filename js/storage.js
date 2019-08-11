@@ -11,7 +11,7 @@ class Storage {
   getAll = () => {
     let watchedList = [];
     for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i).split("iw-")[1];
+      let key = localStorage.key(i).split('iw-')[1];
 
       if (key != undefined) {
         let watched = this.get(key);

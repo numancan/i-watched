@@ -1,6 +1,6 @@
-@import "Base/variables";
-@import "Base/mixins";
-@import "Base/resets";
+@import 'Base/variables';
+@import 'Base/mixins';
+@import 'Base/base';
 
-@import "header";
-@import "main";
+@import 'layout/header';
+@import 'layout/main';

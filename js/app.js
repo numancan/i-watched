@@ -1,5 +1,5 @@
-import searchBar from "./searchBar.js";
-import watchedList from "./watchedList.js";
+import searchBar from './searchBar.js';
+import watchedList from './watchedList.js';
 
 searchBar.initialize();
 watchedList.initialize();
