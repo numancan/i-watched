@@ -1,5 +1,5 @@
 const getDataFromAPI = key => {
-  let url = `http://www.omdbapi.com/?${key}&r=json&apikey=e8381870`;
+  let url = `https://www.omdbapi.com/?${key}&r=json&apikey=e8381870`;
   return fetch(url)
     .then(res => {
       return res.json();
