@@ -216,6 +216,12 @@ header .src-bar .result-list .result img {
   pointer-events: none;
 }
 
+@media screen and (max-width: 768px) {
+  header .src-bar .result-list .result img {
+    width: 10vw;
+  }
+}
+
 header .src-bar .result-list .result .title {
   font-weight: 600;
   display: inline-block;
@@ -236,7 +242,7 @@ main h2 {
 }
 
 main h2::after {
-  content: "";
+  content: '';
   display: block;
   border-bottom: 1px solid #bf360c;
   padding-top: 4px;
@@ -310,7 +316,7 @@ main h2 .watched-count {
 }
 
 .watched-list .watched .holder h3::after {
-  content: "";
+  content: '';
   display: block;
   border-bottom: 1px solid #bf360c;
   padding-top: 4px;

@@ -94,6 +94,10 @@ header {
           margin: 0 3% 0 1%;
           width: 6vw;
           pointer-events: none;
+
+          @include media($max-width: 768px) {
+            width: 10vw;
+          }
         }
 
         .title {
