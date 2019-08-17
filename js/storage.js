@@ -20,6 +20,10 @@ class Storage {
     }
     return watchedList;
   };
+
+  remove = id => {
+    localStorage.removeItem(`iw-${id}`);
+  };
 }
 
 export { Storage };
