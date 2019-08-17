@@ -10,65 +10,74 @@ main {
       font-size: 1.1em;
     }
   }
+}
 
-  .watched-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 0.6fr));
-    grid-auto-rows: minmax(1fr, 500px);
-    grid-auto-flow: row dense;
-    grid-gap: 16px;
-    @include media($max-width: 1024px) {
-      justify-content: center;
+.watched-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 0.6fr));
+  grid-auto-rows: minmax(1fr, 500px);
+  grid-auto-flow: row dense;
+  grid-gap: 16px;
+  @include media($max-width: 1024px) {
+    justify-content: center;
+  }
+
+  .watched {
+    position: relative;
+    img {
+      float: left;
+      @include size($width: 100%);
+
+      &:hover + .holder {
+        z-index: 5;
+      }
     }
 
-    .watched {
-      position: relative;
-      img {
-        float: left;
-        @include size($width: 100%);
+    .holder {
+      background: rgba($primary-color, 0.8);
+      position: absolute;
+      z-index: -1;
+      padding: 7px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      @include size($width: 100%);
+      @include flex($dir: column);
 
-        &:hover + .holder {
-          z-index: 5;
+      &:hover {
+        opacity: 1;
+        z-index: 5;
+      }
+
+      h3 {
+        // font-size: 1.1em;
+        @include underline;
+      }
+
+      .note {
+        margin-top: auto;
+        @include size(100%, 60%);
+
+        h4 {
+          font-size: 0.9em;
+        }
+
+        textarea[name='note'] {
+          resize: none;
+          background: none;
+          border: 1px solid $secondary-color;
+          color: $white;
+          font-size: 0.7em;
+          padding: 5px;
+          @include size(100%, 80%);
         }
       }
 
-      .holder {
-        background: rgba($primary-color, 0.8);
-        position: absolute;
-        z-index: -1;
-        padding: 7px;
-        opacity: 0;
-        transition: opacity 0.3s;
-        @include size($width: 100%);
-        @include flex($dir: column, $jc: space-between);
-
-        &:hover {
-          opacity: 1;
-          z-index: 5;
-        }
-
-        h3 {
-          // font-size: 1.1em;
-          @include underline;
-        }
-
-        .note {
-          @include size(100%, 60%);
-
-          h4 {
-            font-size: 0.9em;
-          }
-
-          textarea[name='note'] {
-            resize: none;
-            background: none;
-            border: 1px solid $secondary-color;
-            color: $white;
-            font-size: 0.7em;
-            padding: 5px;
-            @include size(100%, 80%);
-          }
-        }
+      i {
+        margin-left: auto;
+        margin-right: 5px;
+        font-size: 1.2em;
+        color: rgb(212, 23, 23);
+        cursor: pointer;
       }
     }
   }
