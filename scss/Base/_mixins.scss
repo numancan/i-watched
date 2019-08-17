@@ -10,7 +10,7 @@
 
 @mixin underline {
   &::after {
-    content: "";
+    content: '';
     display: block;
     border-bottom: 1px solid $secondary-color;
     padding-top: 4px;
