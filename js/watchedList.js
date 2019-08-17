@@ -14,9 +14,17 @@ const createElement = watched => {
                           <h3>${watched.title} <span>(${watched.year})</span></h3>
                           <div class="note">
                             <h4>Note</h4>
-														<textarea name="note" spellcheck="false" placeholder="..">${watched.note}</textarea>
+                            <textarea name="note" spellcheck="false" placeholder="..">${watched.note}</textarea>
                         </div>
+                        <i class="far fa-trash-alt"></i>
                       </div>`;
+
+  let trashIcon = element.querySelector('.holder i');
+  trashIcon.addEventListener('click', event => {
+    storge.remove(watched.id);
+    event.target.parentElement.parentElement.remove(this);
+    updateWatchedCount();
+  });
 
   return element;
 };
