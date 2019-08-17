@@ -4,6 +4,7 @@ import { appendToWatchedList } from './watchedList.js';
 const searchBar = document.querySelector('.src-bar');
 const searchInput = document.querySelector('.src-bar__input');
 const searchBtn = document.querySelector('.src-bar__btn');
+const searchIcon = searchBtn.querySelector('i');
 const resultList = document.querySelector('.result-list');
 
 // Clear search bar's input and result list
@@ -12,8 +13,15 @@ const clear = () => {
   resultList.innerHTML = '';
 };
 
+const changeLoadingState = () => {
+  searchIcon.className =
+    searchIcon.className === 'fas fa-spinner spin'
+      ? 'fas fa-search'
+      : 'fas fa-spinner spin';
+};
+
 const appendMovieToResutList = movie => {
-  let element = createElement();
+  const element = createElement();
   resultList.appendChild(element);
 
   function createElement() {
@@ -33,35 +41,42 @@ const appendMovieToResutList = movie => {
 };
 
 const handleSearch = () => {
-  let input = searchInput.value;
+  const input = searchInput.value;
   if (!input) return;
-
-  getDataFromAPI(`s=${input}`).then(data => {
-    let searchResult = data.Search || [];
-    searchResult.forEach(result => {
-      getDataFromAPI(`i=${result.imdbID}`).then(result => {
-        // TODO: clear this shit
-        let {
-          imdbID: id,
-          Genre: genre,
-          Poster: poster,
-          Title: title,
-          Year: year
-        } = result;
-        let movie = { id, genre, poster, title, year, note: '' };
-        appendMovieToResutList(movie);
+  resultList.innerHTML = '';
+  changeLoadingState();
+  getDataFromAPI(`s=${input}`)
+    .then(data => {
+      const searchResult = data.Search || [];
+      searchResult.forEach(result => {
+        getDataFromAPI(`i=${result.imdbID}`).then(result => {
+          const {
+            imdbID: id,
+            Genre: genre,
+            Poster: poster,
+            Title: title,
+            Year: year
+          } = result;
+          const movie = { id, genre, poster, title, year, note: '' };
+          movie.poster =
+            movie.poster || movie.poster === 'N/A' || '../images/no-image.png';
+          appendMovieToResutList(movie);
+        });
       });
+    })
+    .then(() => {
+      changeLoadingState();
     });
-  });
 };
 
 const initialize = () => {
   searchBtn.addEventListener('click', () => {
-    let tableWidth = 768;
-    window.innerWidth <= tableWidth && searchBar.classList.add('active');
+    const tabletWidth = 768;
+    window.innerWidth <= tabletWidth && searchBar.classList.add('active');
     handleSearch();
   });
 
+  // If press enter
   searchInput.addEventListener('keyup', event => {
     if (event.keyCode === 13) {
       event.preventDefault();
