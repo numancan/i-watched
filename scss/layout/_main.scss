@@ -20,6 +20,8 @@ main {
   grid-gap: 16px;
   @include media($max-width: 1024px) {
     justify-content: center;
+    grid-template-columns: 72vw;
+    grid-row-gap: 40px;
   }
 
   .watched {
